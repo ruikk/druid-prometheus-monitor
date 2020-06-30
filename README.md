@@ -17,12 +17,11 @@
 
 如需要关闭 SQL 监控 URI 监控可安如下配置:
 
-关闭 SQL 监控
-```
-management.metrics.enable.druid-sql=false
-```
++ 关闭 SQL 监控
 
-关闭 URI 监控
-```
-management.metrics.enable.druid-uri=false
-```
+  management.metrics.enable.druid-sql=false
+
++ 关闭 URI 监控
+
+  management.metrics.enable.druid-uri=false
+
