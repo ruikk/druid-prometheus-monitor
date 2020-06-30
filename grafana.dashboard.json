@@ -125,6 +125,7 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "druid_initial_size{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}",
@@ -266,6 +267,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_pooling_peak{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -349,6 +351,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_active_peak{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -415,6 +418,7 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_connection_hold_time_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", le=\"1ms\"}) ",
@@ -581,6 +585,7 @@
         "show": false
       },
       "tableColumn": "__name__",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -666,6 +671,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -750,6 +756,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_update_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -833,6 +840,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_batch_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -916,6 +924,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_commit_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -999,6 +1008,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_rollback_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1084,6 +1094,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_error_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1149,6 +1160,7 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_transaction_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", le=\"1ms\"})",
@@ -1311,6 +1323,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_max_wait_thread_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1395,6 +1408,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_not_empty_wait_millis{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1479,6 +1493,7 @@
         "show": false
       },
       "tableColumn": "__name__",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_not_empty_wait_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1565,6 +1580,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_query_timeout{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1649,6 +1665,7 @@
         "show": false
       },
       "tableColumn": "",
+      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_transaction_query_timeout{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -1720,6 +1737,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_sql_running_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -1808,6 +1826,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_sql_concurrent_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -1896,6 +1915,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_sql_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -1984,6 +2004,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_sql_error_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -2072,6 +2093,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_sql_total_time{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -2161,6 +2183,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(max(druid_sql_max_timespan{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}) without (instance))",
@@ -2263,6 +2286,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_running_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\"}) without (instance))",
@@ -2350,6 +2374,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_request_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\"}) without (instance))",
@@ -2436,6 +2461,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_request_time_millis{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2523,6 +2549,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(max(druid_uri_request_time_millis_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2611,6 +2638,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_concurrent_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2698,6 +2726,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_jdbc_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2784,6 +2813,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_jdbc_execute_time_millis{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2870,6 +2900,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "(sum(druid_uri_jdbc_execute_error_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"}) without (instance))",
@@ -2993,6 +3024,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_running_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3077,6 +3109,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_concurrent_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3161,6 +3194,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3245,6 +3279,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_fetch_row_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3328,6 +3363,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_total_time{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3414,6 +3450,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "max(druid_sql_max_timespan{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3497,6 +3534,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_error_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3585,6 +3623,7 @@
             "show": false
           },
           "tableColumn": "Value",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "max(druid_sql_last_error_time{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"})",
@@ -3655,6 +3694,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\", le=\"1ms\"})",
@@ -3799,6 +3839,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_execute_and_result_hold_time_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\", le=\"1ms\"})",
@@ -3943,6 +3984,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_fetch_row_count_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\", le=\"1ms\"})",
@@ -4087,6 +4129,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_sql_effected_row_count_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\", le=\"1ms\"})",
@@ -4253,9 +4296,10 @@
             "show": false
           },
           "tableColumn": "Value",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
-              "expr": "druid_sql_last_error_time{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"}",
+              "expr": "max(druid_sql_last_error_time{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", sql=~\"$sql\"}) by (class,message)",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -4353,6 +4397,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_running_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -4437,6 +4482,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_request_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -4523,6 +4569,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_request_time_millis{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -4607,6 +4654,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "max(druid_uri_request_time_millis_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -4676,6 +4724,7 @@
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\", le=\"1ms\"})",
@@ -4838,6 +4887,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_concurrent_max{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -4922,6 +4972,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_jdbc_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -5006,6 +5057,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_jdbc_execute_time_millis{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -5090,6 +5142,7 @@
             "show": false
           },
           "tableColumn": "",
+          "datasource": "${DS_PROMETHEUS}",
           "targets": [
             {
               "expr": "sum(druid_uri_jdbc_execute_error_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", uri=~\"$uri\"})",
@@ -5316,6 +5369,5 @@
   },
   "timezone": "browser",
   "title": "Druid DataSource",
-  "uid": "sRDudWZMz",
   "version": 1
 }
