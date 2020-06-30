@@ -125,7 +125,6 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "druid_initial_size{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"}",
@@ -418,7 +417,6 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_connection_hold_time_histogram_bucket{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\", le=\"1ms\"}) ",
@@ -585,7 +583,6 @@
         "show": false
       },
       "tableColumn": "__name__",
-      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
@@ -756,7 +753,6 @@
         "show": false
       },
       "tableColumn": "",
-      "datasource": "${DS_PROMETHEUS}",
       "targets": [
         {
           "expr": "sum(druid_execute_update_count{application=\"$application\", region=~\"$region\", instance=~\"$instance\", pool=~\"$druid_pool_name\"})",
