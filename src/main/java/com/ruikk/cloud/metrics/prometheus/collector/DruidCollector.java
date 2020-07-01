@@ -59,13 +59,32 @@ public class DruidCollector extends Collector {
     private final static String[] DRUID_METRICS_URI_HISTOGRAM_NAMES = {"Histogram"};
 
     private final static String SQL_NAME_LAST_ERROR_TIME = "LastErrorTime";
+    private static final String NAME_POOL = "pool";
+    private static final String NAME_SQL = "sql";
+    private static final String NAME_LE = "le";
+    private static final String NAME_CLASS = "class";
+    private static final String NAME_MESSAGE = "message";
+    private static final String NAME_URI = "uri";
+    
+    private static final String KEY_NAME = "Name";
+    private static final String KEY_SQL = "SQL";
+    private static final String KEY_URI = "URI";
+    private static final String KEY_ERR_CLS = "LastErrorClass";
+    private static final String KEY_ERR_MSG = "LastErrorMessage";
+
+    private static final String LABEL_PRE_DRUID = "druid_";
+    private static final String LABEL_PRE_SQL = "druid_sql_";
+    private static final String LABEL_PRE_URI = "druid_uri_";
+    private static final String LABEL_SUF_BUCKET = "_bucket";
+
+    private static final String HELP_PRE_DRUID = "Druid ";
+    private static final String HELP_PRE_SQL = "Druid SQL ";
+    private static final String HELP_PRE_URI = "Druid URI ";
 
     private final String[] BUCKETS = {"1ms", "10ms", "100ms", "1s", "10s", "100s", "Inf"};
 
     private final static Pattern PATTERN_CAMEL = Pattern.compile("(?<=[a-z])(?=[A-Z])");
-
-    private final static Function<String, String> CAMEL_TO_SNAKE =
-            str -> Stream.of(PATTERN_CAMEL.split(str)).filter(s-> s != null && !s.isEmpty()).map(String::toLowerCase).collect(Collectors.joining("_"));
+    private final static Pattern PATTERN_SPACE = Pattern.compile("\\s+");
 
     private final List<String> LABEL_NAMES;
     private final List<String> LABEL_HISTOGRAM_NAMES;
@@ -86,6 +105,14 @@ public class DruidCollector extends Collector {
     private boolean enableSql;
     private boolean enableUri;
 
+    private static String reduceSpace (String str){
+        return PATTERN_SPACE.matcher(str).replaceAll(" ");
+    }
+
+    private static String camelToSnake (String str){
+        return Stream.of(PATTERN_CAMEL.split(str)).filter(s-> s != null && !s.isEmpty()).map(String::toLowerCase).collect(Collectors.joining("_"));
+    }
+
     public DruidCollector(Map<String, String> tags, boolean enableSql, boolean enableUri) {
         this.enableSql = enableSql;
         this.enableUri = enableUri;
@@ -95,26 +122,26 @@ public class DruidCollector extends Collector {
         List<String> tagKey = tagEntry.stream().map(Map.Entry::getKey).collect(Collectors.toList());
         List<String> tagVal = tagEntry.stream().map(Map.Entry::getValue).collect(Collectors.toList());
 
-        LABEL_NAMES = Stream.concat(tagKey.stream(), Stream.of("pool")).collect(Collectors.toList());
-        LABEL_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of("pool", "le")).collect(Collectors.toList());
+        LABEL_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_POOL)).collect(Collectors.toList());
+        LABEL_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_POOL, NAME_LE)).collect(Collectors.toList());
 
-        LABEL_SQL_NAMES = Stream.concat(tagKey.stream(), Stream.of("pool", "sql")).collect(Collectors.toList());
-        LABEL_SQL_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of("pool", "sql", "le")).collect(Collectors.toList());
-        LABEL_SQL_ERROR_NAMES = Stream.concat(tagKey.stream(), Stream.of("pool", "sql", "class", "message")).collect(Collectors.toList());
+        LABEL_SQL_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_POOL, NAME_SQL)).collect(Collectors.toList());
+        LABEL_SQL_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_POOL, NAME_SQL, NAME_LE)).collect(Collectors.toList());
+        LABEL_SQL_ERROR_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_POOL, NAME_SQL, NAME_CLASS, NAME_MESSAGE)).collect(Collectors.toList());
 
-        LABEL_URI_NAMES = Stream.concat(tagKey.stream(), Stream.of("uri")).collect(Collectors.toList());
-        LABEL_URI_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of("uri", "le")).collect(Collectors.toList());
+        LABEL_URI_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_URI)).collect(Collectors.toList());
+        LABEL_URI_HISTOGRAM_NAMES = Stream.concat(tagKey.stream(), Stream.of(NAME_URI, NAME_LE)).collect(Collectors.toList());
 
         // func
-        LABEL_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("Name"))).collect(Collectors.toList());
-        LABEL_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("Name"), le)).collect(Collectors.toList());
+        LABEL_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_NAME))).collect(Collectors.toList());
+        LABEL_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_NAME), le)).collect(Collectors.toList());
 
-        LABEL_SQL_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("Name"), (String) map.get("SQL"))).collect(Collectors.toList());
-        LABEL_SQL_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("Name"), (String) map.get("SQL"), le)).collect(Collectors.toList());
-        LABEL_SQL_ERROR_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of("Name", "SQL", "LastErrorClass", "LastErrorMessage").map(k-> (String) map.get(k))).collect(Collectors.toList());
+        LABEL_SQL_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_NAME), reduceSpace((String) map.get(KEY_SQL)))).collect(Collectors.toList());
+        LABEL_SQL_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_NAME), reduceSpace((String) map.get(KEY_SQL)), le)).collect(Collectors.toList());
+        LABEL_SQL_ERROR_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_NAME), reduceSpace((String) map.get(KEY_SQL)), (String) map.get(KEY_ERR_CLS), (String) map.get(KEY_ERR_MSG))).collect(Collectors.toList());
 
-        LABEL_URI_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("URI"))).collect(Collectors.toList());
-        LABEL_URI_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get("URI"), le)).collect(Collectors.toList());
+        LABEL_URI_VALUES_FUNCTION = (map) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_URI))).collect(Collectors.toList());
+        LABEL_URI_HISTOGRAM_VALUES_FUNCTION = (map, le) -> Stream.concat(tagVal.stream(), Stream.of((String) map.get(KEY_URI), le)).collect(Collectors.toList());
     }
 
     @Override
@@ -128,8 +155,8 @@ public class DruidCollector extends Collector {
 
         int initialCapacity =
                 statList.size() * (DRUID_METRICS_NAMES.length + DRUID_METRICS_HISTOGRAM_NAMES.length) +
-                sqlList.size() * (DRUID_METRICS_SQL_NAMES.length + DRUID_METRICS_SQL_HISTOGRAM_NAMES.length + 1) +
-                uriList.size() * (DRUID_METRICS_URI_NAMES.length + DRUID_METRICS_URI_HISTOGRAM_NAMES.length);
+                        sqlList.size() * (DRUID_METRICS_SQL_NAMES.length + DRUID_METRICS_SQL_HISTOGRAM_NAMES.length + 1) +
+                        uriList.size() * (DRUID_METRICS_URI_NAMES.length + DRUID_METRICS_URI_HISTOGRAM_NAMES.length);
 
         List<MetricFamilySamples> list = new ArrayList<>(initialCapacity);
 
@@ -175,13 +202,13 @@ public class DruidCollector extends Collector {
     }
 
     private GaugeMetricFamily createGauge(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, Number> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_" + CAMEL_TO_SNAKE.apply(metric), "Druid " + metric, LABEL_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_DRUID + camelToSnake(metric), HELP_PRE_DRUID + metric, LABEL_NAMES);
         list.forEach((m) -> metricFamily.addMetric(LABEL_VALUES_FUNCTION.apply(m), metricValueFunc.apply(m).doubleValue()));
         return metricFamily;
     }
 
     private GaugeMetricFamily createHistogram(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, long[]> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_" + CAMEL_TO_SNAKE.apply(metric) + "_bucket", "Druid " + metric, LABEL_HISTOGRAM_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_DRUID + camelToSnake(metric) + LABEL_SUF_BUCKET, HELP_PRE_DRUID + metric, LABEL_HISTOGRAM_NAMES);
 
         list.forEach((m) -> {
             long[] data = metricValueFunc.apply(m);
@@ -193,13 +220,13 @@ public class DruidCollector extends Collector {
     }
 
     private GaugeMetricFamily createSqlGauge(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, Number> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_sql_" + CAMEL_TO_SNAKE.apply(metric), "Druid SQL " + metric, LABEL_SQL_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_SQL + camelToSnake(metric), HELP_PRE_SQL + metric, LABEL_SQL_NAMES);
         list.forEach((m) -> metricFamily.addMetric(LABEL_SQL_VALUES_FUNCTION.apply(m), metricValueFunc.apply(m).doubleValue()));
         return metricFamily;
     }
 
     private GaugeMetricFamily createSqlErrorGauge(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, Date> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_sql_" + CAMEL_TO_SNAKE.apply(metric), "Druid SQL " + metric, LABEL_SQL_ERROR_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_SQL + camelToSnake(metric), HELP_PRE_SQL + metric, LABEL_SQL_ERROR_NAMES);
         list.forEach((m) -> {
             Date date = metricValueFunc.apply(m);
             if(date != null) {
@@ -210,7 +237,7 @@ public class DruidCollector extends Collector {
     }
 
     private GaugeMetricFamily createSqlHistogram(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, long[]> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_sql_" + CAMEL_TO_SNAKE.apply(metric) + "_bucket", "Druid SQL " + metric, LABEL_SQL_HISTOGRAM_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_SQL + camelToSnake(metric) + LABEL_SUF_BUCKET, HELP_PRE_SQL + metric, LABEL_SQL_HISTOGRAM_NAMES);
 
         list.forEach((m) -> {
             long[] data = metricValueFunc.apply(m);
@@ -222,13 +249,13 @@ public class DruidCollector extends Collector {
     }
 
     private GaugeMetricFamily createUriGauge(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, Number> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_uri_" + CAMEL_TO_SNAKE.apply(metric), "Druid URI " + metric, LABEL_URI_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_URI + camelToSnake(metric), HELP_PRE_URI + metric, LABEL_URI_NAMES);
         list.forEach((m) -> metricFamily.addMetric(LABEL_URI_VALUES_FUNCTION.apply(m), metricValueFunc.apply(m).doubleValue()));
         return metricFamily;
     }
 
     private GaugeMetricFamily createUriHistogram(String metric, List<Map<String, Object>> list, Function<Map<String, Object>, long[]> metricValueFunc) {
-        GaugeMetricFamily metricFamily = new GaugeMetricFamily("druid_uri_" + CAMEL_TO_SNAKE.apply(metric) + "_bucket", "Druid URI " + metric, LABEL_URI_HISTOGRAM_NAMES);
+        GaugeMetricFamily metricFamily = new GaugeMetricFamily(LABEL_PRE_URI + camelToSnake(metric) + LABEL_SUF_BUCKET, HELP_PRE_URI + metric, LABEL_URI_HISTOGRAM_NAMES);
 
         list.forEach((m) -> {
             long[] data = metricValueFunc.apply(m);
