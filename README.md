@@ -1,8 +1,10 @@
 ## Druid Monitor (for Prometheus)
 
-当使用 Druid 作为数据源时通过`druid-prometheus-monitor`能够使用 prometheus 对 Druid 进行监控
+如果你使用 Druid 作为数据库连接池时希望通过 Prometheus 对 Druid 进行监控，那么 `druid-prometheus-monitor` 可以解决这个问题，
 
-默认通过端点 /actuator/prometheus 提供服务，详情请参考 spring-boot-starter-actuator
+`druid-prometheus-monitor` 会将 Druid 的大部分指标通过 micrometer-registry-prometheus 注册到端点，
+
+默认通过端点 /actuator/prometheus 提供服务，详情请参考 spring-boot-starter-actuator 和 micrometer-registry-prometheus
 
 ### 项目依赖
 - Java 1.8+
